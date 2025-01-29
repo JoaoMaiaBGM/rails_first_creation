@@ -1,12 +1,25 @@
-<h1>Products</h1>
+<h1>STORE</h1>
 
-<%= link_to "New product", new_product_path %>
+<hr />
+
+<div>
+    <span>
+        Para cadastrar um novo produto utilize o link abaixo:
+    </span>
+    <div>
+        <%= link_to "New product", new_product_path %>
+    </div>
+</div>
+
+<hr />
 
 <div id="products">
+    <h3>Products list:</h3>
     <% @products.each do |product| %>
+
     <div>
+        <%= product.id %> ->
         <%= link_to product.name, product %>
     </div>
 </div>
 <% end %>
-<p>These are the products in the database</p>
