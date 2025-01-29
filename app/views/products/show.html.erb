@@ -8,6 +8,7 @@
     <%= link_to "<- Back", products_path %>
 </div>
 
+<% if authenticated? %>
 <div>
     >
     <%= link_to "Edit product", edit_product_path(@product) %>
@@ -16,3 +17,4 @@
 <div>
     <%= button_to "Delete", @product, method: :delete, data: {turbo_confirm: "Are you sure?" } %>
 </div>
+<% end %>

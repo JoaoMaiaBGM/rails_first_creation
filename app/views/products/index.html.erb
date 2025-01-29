@@ -7,7 +7,7 @@
         Para cadastrar um novo produto utilize o link abaixo:
     </span>
     <div>
-        <%= link_to "New product", new_product_path %>
+        <%= link_to "New product", new_product_path if authenticated? %>
     </div>
 </div>
 
