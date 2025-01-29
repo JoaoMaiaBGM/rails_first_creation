@@ -1,0 +1,6 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[html.erb]": {
+    "editor.defaultFormatter": "bung87.rails"
+  }
+}
