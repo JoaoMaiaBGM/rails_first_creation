@@ -1,6 +1,10 @@
 <% cache @product.cache_key_with_version do %>
+
 <h1>Product name: <%= @product.name %></h1>
+<%= image_tag @product.product_image if @product.product_image.attached? %>
+
 <h2>Product ID: <%= @product.id %></h2>
+
 <div>
     <h3>Description:</h3>
     <p> <%= @product.description %> </p>
@@ -9,15 +13,16 @@
 
 <hr>
 
+<span><strong>Actions:</strong></span><br>
 <div>
     <%= link_to "<- Back", products_path %>
-</div>
+</div><br>
 
 <% if authenticated? %>
 <div>
     >
     <%= link_to "Edit product", edit_product_path(@product) %>
-</div>
+</div><br>
 
 <div>
     <%= button_to "Delete", @product, method: :delete, data: {turbo_confirm: "Are you sure?" } %>
