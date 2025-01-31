@@ -27,6 +27,11 @@
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
+/db/*.sqlite3
+/db/*.sqlite3-shm
+/db/*.sqlite3-wal
+/db/*.sqlite3-journal
+
 
 /public/assets
 
