@@ -2,6 +2,7 @@
 
 <hr />
 
+<% if authenticated? %>
 <div>
     <span>
         Para cadastrar um novo produto utilize o link abaixo:
@@ -9,19 +10,60 @@
     <div>
         <%= link_to "New product", new_product_path if authenticated? %>
     </div>
+    <hr />
 </div>
+<% end %>
 
-<hr />
 
 <div id="products">
     <h3>Products list:</h3>
-    <% @products.each do |product| %>
-
-    <div>
-        <%= product.id %> ->
-        <%= link_to product.name, product %>
-        <%= product.description %>
-    </div>
-    <br>
+    <ul class="product_list">
+        <% @products.each do |product| %>
+        <li class="product_item">
+            <%= product.id %> ->
+            <%= link_to product.name, product %>
+            <%= product.description %>
+            <div class="image_container">
+                <%= image_tag product.product_image if product.product_image.attached? %>
+            </div>
+        </li>
+        <% end %>
+    </ul>
 </div>
-<% end %>
+
+<style>
+    .product_list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    .product_item {
+        width: 300px;
+        height: 250px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .image_container {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin: 8px auto auto auto;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+    }
+</style>

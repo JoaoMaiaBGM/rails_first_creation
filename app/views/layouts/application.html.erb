@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <nav>
+    <nav class="nav_container">
         <div>
             <%= link_to "Home", root_path %>
         </div>
@@ -48,3 +48,10 @@
 </body>
 
 </html>
+
+<style>
+    .nav_container {
+        display: flex;
+        gap: 0.5rem;
+    }
+</style>
