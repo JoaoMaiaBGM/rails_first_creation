@@ -3,8 +3,22 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
 </div>
+<br>
 
 <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.rich_text_area :description %>
+</div>
+<br>
+
+<div>
+    <%= form.label :product_image, style: "display: block" %>
+    <%= form.file_field :product_image, accept: "image/*" %>
+</div>
+<br>
+
+<div>
+    <span><strong>Actions:</strong></span><br>
     <%= form.submit %>
 </div>
 <% end %>
