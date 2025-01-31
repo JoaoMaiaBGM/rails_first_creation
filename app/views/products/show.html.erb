@@ -1,6 +1,7 @@
+<% cache @product.cache_key_with_version do %>
 <h1>Nome do produto: <%= @product.name %></h1>
-
 <h2>ID do produto: <%= @product.id %></h2>
+<% end %>
 
 <hr>
 
