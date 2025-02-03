@@ -1,8 +1,16 @@
-# Omakase Ruby styling for Rails
+inherit_from: .rubocop_todo.yml
+
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+inherit_mode:
+  merge:
+    - Exclude
+    - Include
+
+# Preferir aspas duplas
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Desativação do comentário de documentação
+Style/Documentation:
+  Enabled: false

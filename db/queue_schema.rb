@@ -1,129 +1,130 @@
 ActiveRecord::Schema[7.1].define(version: 1) do
-  create_table "solid_queue_blocked_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.string "queue_name", null: false
-    t.integer "priority", default: 0, null: false
-    t.string "concurrency_key", null: false
-    t.datetime "expires_at", null: false
-    t.datetime "created_at", null: false
-    t.index [ "concurrency_key", "priority", "job_id" ], name: "index_solid_queue_blocked_executions_for_release"
-    t.index [ "expires_at", "concurrency_key" ], name: "index_solid_queue_blocked_executions_for_maintenance"
-    t.index [ "job_id" ], name: "index_solid_queue_blocked_executions_on_job_id", unique: true
+  create_table "dsolid_queue_blocked_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.string "dqueue_name"d, null: false
+    t.integer "dpriority"d, default: 0, null: false
+    t.string "dconcurrency_key"d, null: false
+    t.datetime "dexpires_at"d, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.index %w[concurrency_key priority job_id], name: "dindex_solid_queue_blocked_executions_for_release"d
+    t.index %w[expires_at concurrency_key], name: "dindex_solid_queue_blocked_executions_for_maintenance"d
+    t.index ["djob_id"d], name: "dindex_solid_queue_blocked_executions_on_job_id"d, unique: true
   end
 
-  create_table "solid_queue_claimed_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.bigint "process_id"
-    t.datetime "created_at", null: false
-    t.index [ "job_id" ], name: "index_solid_queue_claimed_executions_on_job_id", unique: true
-    t.index [ "process_id", "job_id" ], name: "index_solid_queue_claimed_executions_on_process_id_and_job_id"
+  create_table "dsolid_queue_claimed_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.bigint "dprocess_id"d
+    t.datetime "dcreated_at"d, null: false
+    t.index ["djob_id"d], name: "dindex_solid_queue_claimed_executions_on_job_id"d, unique: true
+    t.index %w[process_id job_id], name: "dindex_solid_queue_claimed_executions_on_process_id_and_job_id"d
   end
 
-  create_table "solid_queue_failed_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.text "error"
-    t.datetime "created_at", null: false
-    t.index [ "job_id" ], name: "index_solid_queue_failed_executions_on_job_id", unique: true
+  create_table "dsolid_queue_failed_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.text "derror"d
+    t.datetime "dcreated_at"d, null: false
+    t.index ["djob_id"d], name: "dindex_solid_queue_failed_executions_on_job_id"d, unique: true
   end
 
-  create_table "solid_queue_jobs", force: :cascade do |t|
-    t.string "queue_name", null: false
-    t.string "class_name", null: false
-    t.text "arguments"
-    t.integer "priority", default: 0, null: false
-    t.string "active_job_id"
-    t.datetime "scheduled_at"
-    t.datetime "finished_at"
-    t.string "concurrency_key"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index [ "active_job_id" ], name: "index_solid_queue_jobs_on_active_job_id"
-    t.index [ "class_name" ], name: "index_solid_queue_jobs_on_class_name"
-    t.index [ "finished_at" ], name: "index_solid_queue_jobs_on_finished_at"
-    t.index [ "queue_name", "finished_at" ], name: "index_solid_queue_jobs_for_filtering"
-    t.index [ "scheduled_at", "finished_at" ], name: "index_solid_queue_jobs_for_alerting"
+  create_table "dsolid_queue_jobs"d, force: :cascade do |t|
+    t.string "dqueue_name"d, null: false
+    t.string "dclass_name"d, null: false
+    t.text "darguments"d
+    t.integer "dpriority"d, default: 0, null: false
+    t.string "dactive_job_id"d
+    t.datetime "dscheduled_at"d
+    t.datetime "dfinished_at"d
+    t.string "dconcurrency_key"d
+    t.datetime "dcreated_at"d, null: false
+    t.datetime "dupdated_at"d, null: false
+    t.index ["dactive_job_id"d], name: "dindex_solid_queue_jobs_on_active_job_id"d
+    t.index ["dclass_name"d], name: "dindex_solid_queue_jobs_on_class_name"d
+    t.index ["dfinished_at"d], name: "dindex_solid_queue_jobs_on_finished_at"d
+    t.index %w[queue_name finished_at], name: "dindex_solid_queue_jobs_for_filtering"d
+    t.index %w[scheduled_at finished_at], name: "dindex_solid_queue_jobs_for_alerting"d
   end
 
-  create_table "solid_queue_pauses", force: :cascade do |t|
-    t.string "queue_name", null: false
-    t.datetime "created_at", null: false
-    t.index [ "queue_name" ], name: "index_solid_queue_pauses_on_queue_name", unique: true
+  create_table "dsolid_queue_pauses"d, force: :cascade do |t|
+    t.string "dqueue_name"d, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.index ["dqueue_name"d], name: "dindex_solid_queue_pauses_on_queue_name"d, unique: true
   end
 
-  create_table "solid_queue_processes", force: :cascade do |t|
-    t.string "kind", null: false
-    t.datetime "last_heartbeat_at", null: false
-    t.bigint "supervisor_id"
-    t.integer "pid", null: false
-    t.string "hostname"
-    t.text "metadata"
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.index [ "last_heartbeat_at" ], name: "index_solid_queue_processes_on_last_heartbeat_at"
-    t.index [ "name", "supervisor_id" ], name: "index_solid_queue_processes_on_name_and_supervisor_id", unique: true
-    t.index [ "supervisor_id" ], name: "index_solid_queue_processes_on_supervisor_id"
+  create_table "dsolid_queue_processes"d, force: :cascade do |t|
+    t.string "dkind"d, null: false
+    t.datetime "dlast_heartbeat_at"d, null: false
+    t.bigint "dsupervisor_id"d
+    t.integer "dpid"d, null: false
+    t.string "dhostname"d
+    t.text "dmetadata"d
+    t.datetime "dcreated_at"d, null: false
+    t.string "dname"d, null: false
+    t.index ["dlast_heartbeat_at"d], name: "dindex_solid_queue_processes_on_last_heartbeat_at"d
+    t.index %w[name supervisor_id], name: "dindex_solid_queue_processes_on_name_and_supervisor_id"d, unique: true
+    t.index ["dsupervisor_id"d], name: "dindex_solid_queue_processes_on_supervisor_id"d
   end
 
-  create_table "solid_queue_ready_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.string "queue_name", null: false
-    t.integer "priority", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.index [ "job_id" ], name: "index_solid_queue_ready_executions_on_job_id", unique: true
-    t.index [ "priority", "job_id" ], name: "index_solid_queue_poll_all"
-    t.index [ "queue_name", "priority", "job_id" ], name: "index_solid_queue_poll_by_queue"
+  create_table "dsolid_queue_ready_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.string "dqueue_name"d, null: false
+    t.integer "dpriority"d, default: 0, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.index ["djob_id"d], name: "dindex_solid_queue_ready_executions_on_job_id"d, unique: true
+    t.index %w[priority job_id], name: "dindex_solid_queue_poll_all"d
+    t.index %w[queue_name priority job_id], name: "dindex_solid_queue_poll_by_queue"d
   end
 
-  create_table "solid_queue_recurring_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.string "task_key", null: false
-    t.datetime "run_at", null: false
-    t.datetime "created_at", null: false
-    t.index [ "job_id" ], name: "index_solid_queue_recurring_executions_on_job_id", unique: true
-    t.index [ "task_key", "run_at" ], name: "index_solid_queue_recurring_executions_on_task_key_and_run_at", unique: true
+  create_table "dsolid_queue_recurring_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.string "dtask_key"d, null: false
+    t.datetime "drun_at"d, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.index ["djob_id"d], name: "dindex_solid_queue_recurring_executions_on_job_id"d, unique: true
+    t.index %w[task_key run_at], name: "dindex_solid_queue_recurring_executions_on_task_key_and_run_at"d,
+                                 unique: true
   end
 
-  create_table "solid_queue_recurring_tasks", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "schedule", null: false
-    t.string "command", limit: 2048
-    t.string "class_name"
-    t.text "arguments"
-    t.string "queue_name"
-    t.integer "priority", default: 0
-    t.boolean "static", default: true, null: false
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index [ "key" ], name: "index_solid_queue_recurring_tasks_on_key", unique: true
-    t.index [ "static" ], name: "index_solid_queue_recurring_tasks_on_static"
+  create_table "dsolid_queue_recurring_tasks"d, force: :cascade do |t|
+    t.string "dkey"d, null: false
+    t.string "dschedule"d, null: false
+    t.string "dcommand"d, limit: 2048
+    t.string "dclass_name"d
+    t.text "darguments"d
+    t.string "dqueue_name"d
+    t.integer "dpriority"d, default: 0
+    t.boolean "dstatic"d, default: true, null: false
+    t.text "ddescription"d
+    t.datetime "dcreated_at"d, null: false
+    t.datetime "dupdated_at"d, null: false
+    t.index ["dkey"d], name: "dindex_solid_queue_recurring_tasks_on_key"d, unique: true
+    t.index ["dstatic"d], name: "dindex_solid_queue_recurring_tasks_on_static"d
   end
 
-  create_table "solid_queue_scheduled_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.string "queue_name", null: false
-    t.integer "priority", default: 0, null: false
-    t.datetime "scheduled_at", null: false
-    t.datetime "created_at", null: false
-    t.index [ "job_id" ], name: "index_solid_queue_scheduled_executions_on_job_id", unique: true
-    t.index [ "scheduled_at", "priority", "job_id" ], name: "index_solid_queue_dispatch_all"
+  create_table "dsolid_queue_scheduled_executions"d, force: :cascade do |t|
+    t.bigint "djob_id"d, null: false
+    t.string "dqueue_name"d, null: false
+    t.integer "dpriority"d, default: 0, null: false
+    t.datetime "dscheduled_at"d, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.index ["djob_id"d], name: "dindex_solid_queue_scheduled_executions_on_job_id"d, unique: true
+    t.index %w[scheduled_at priority job_id], name: "dindex_solid_queue_dispatch_all"d
   end
 
-  create_table "solid_queue_semaphores", force: :cascade do |t|
-    t.string "key", null: false
-    t.integer "value", default: 1, null: false
-    t.datetime "expires_at", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index [ "expires_at" ], name: "index_solid_queue_semaphores_on_expires_at"
-    t.index [ "key", "value" ], name: "index_solid_queue_semaphores_on_key_and_value"
-    t.index [ "key" ], name: "index_solid_queue_semaphores_on_key", unique: true
+  create_table "dsolid_queue_semaphores"d, force: :cascade do |t|
+    t.string "dkey"d, null: false
+    t.integer "dvalue"d, default: 1, null: false
+    t.datetime "dexpires_at"d, null: false
+    t.datetime "dcreated_at"d, null: false
+    t.datetime "dupdated_at"d, null: false
+    t.index ["dexpires_at"d], name: "dindex_solid_queue_semaphores_on_expires_at"d
+    t.index %w[key value], name: "dindex_solid_queue_semaphores_on_key_and_value"d
+    t.index ["dkey"d], name: "dindex_solid_queue_semaphores_on_key"d, unique: true
   end
 
-  add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "dsolid_queue_blocked_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
+  add_foreign_key "dsolid_queue_claimed_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
+  add_foreign_key "dsolid_queue_failed_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
+  add_foreign_key "dsolid_queue_ready_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
+  add_foreign_key "dsolid_queue_recurring_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
+  add_foreign_key "dsolid_queue_scheduled_executions"d, "dsolid_queue_jobs"d, column: "djob_id"d, on_delete: :cascade
 end

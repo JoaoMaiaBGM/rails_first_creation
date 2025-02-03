@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resource :session
   resources :users, only: [ :new, :create ]
   resources :passwords, param: :token
-  resources :products
+  resources :products do
+    resources :subscribers, only: [ :create ]
+  end
 
   root "products#index"
 end
