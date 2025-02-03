@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "dotenv/load"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -25,6 +26,20 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
   end
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+  address: "smtp.office365.com",
+  port: 587,
+  domain: "hotmail.com",
+  authentication: "plain",
+  enable_starttls_auto: true,
+  open_timeout: 30,
+  read_timeout: 30,
+  user_name: ENV["EMAIL_USERNAME"],
+  password: ENV["EMAIL_PASSWORD"]
+}
+
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
@@ -32,7 +47,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
